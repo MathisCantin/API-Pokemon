@@ -1,0 +1,320 @@
+{
+    "openapi": "3.1.0",
+    "info" : {
+        "title": "API Pokémon",
+        "summary": "Effectue des requêtes CRUD sur un bd SQL de pokemon.",
+        "version": "1.0.1"
+    },
+    "servers": [
+      {
+        "url": "http://api.pokemon.com",
+        "description": "Serveur en ligne"
+      },
+      {
+        "url": "http://127.0.0.1:3000/",
+        "description": "Serveur de développement"
+      }
+    ],
+    "paths": {
+      "/api/pokemons/:id": {
+        "get": {
+          "description": "Obtient les détails d'un Pokémon en fonction de son identifiant.",
+          "summary": "Afficher un Pokémon selon son ID",
+          "tags": ["Pokémon"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID du Pokémon"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succès, renvoie les détails du Pokémon",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "nom": "Bulbasaur",
+                    "type_primaire": "Grass",
+                    "type_secondaire": "Poison",
+                    "pv": 45,
+                    "attaque": 49,
+                    "defense": 49
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Pokémon introuvable avec l'ID spécifié"
+            },
+            "500": {
+              "description": "Erreur lors de la récupération du Pokémon avec l'ID spécifié"
+            }
+          }
+        }
+      },
+      "/api/pokemons/liste": {
+        "get": {
+          "description": "Affiche la liste paginée de tous les Pokémon.",
+          "summary": "Afficher une liste paginée de tous les Pokémon",
+          "tags": ["Pokémon"],
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "Numéro de la page (par défaut: 1)"
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "Type primaire du Pokémon pour le filtrage"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succès, renvoie la liste paginée des Pokémon avec informations de pagination",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "pokemons": [
+                      {
+                        "nom": "Bulbasaur",
+                        "type_primaire": "Grass",
+                        "type_secondaire": "Poison",
+                        "pv": 45,
+                        "attaque": 49,
+                        "defense": 49
+                      }
+                    ],
+                    "type": "Grass",
+                    "nombrePokemonTotal": 94,
+                    "page": 2,
+                    "totalPage": 4
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erreur lors de la récupération de la liste des Pokémon"
+            }
+          }
+        }
+      },
+      "/api/pokemons": {
+        "post": {
+          "description": "Ajoute un nouveau Pokémon.",
+          "summary": "Ajouter un Pokémon",
+          "tags": ["Pokémon"],
+          "requestBody": {
+            "description": "Corps de la requête",
+            "required": true,
+            "content": {
+              "application/json": {
+                "example": {
+                  "nom": "Bulbasaur",
+                  "type_primaire": "Grass",
+                  "type_secondaire": "Poison",
+                  "pv": 45,
+                  "attaque": 49,
+                  "defense": 49
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Succès, renvoie un message et les détails du nouveau Pokémon",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Le pokemon Bulbasaur a été ajouté avec succès",
+                    "pokemon": {
+                      "id": 999,
+                      "nom": "Bulbasaur",
+                      "type_primaire": "Grass",
+                      "type_secondaire": "Poison",
+                      "pv": 45,
+                      "attaque": 49,
+                      "defense": 49
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Format JSON invalide ou champs manquants",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "erreur": "Le format des données est invalide",
+                    "champ_manquant": ["pv", "attaque"]
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erreur lors de la création du Pokémon"
+            }
+          }
+        }
+      },
+      "/api/pokemons/{id}": {
+        "put": {
+          "description": "Modifie les détails d'un Pokémon en fonction de son identifiant.",
+          "summary": "Modifier un Pokémon",
+          "tags": ["Pokémon"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID du Pokémon"
+            }
+          ],
+          "requestBody": {
+            "description": "Corps de la requête",
+            "required": true,
+            "content": {
+              "application/json": {
+                "example": {
+                  "nom": "Ivysaur",
+                  "type_primaire": "Grass",
+                  "type_secondaire": "Poison",
+                  "pv": 60,
+                  "attaque": 62,
+                  "defense": 63
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succès, renvoie un message et les détails du Pokémon modifié",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Le pokemon id 999 a été modifié avec succès",
+                    "pokemon": {
+                      "id": 999,
+                      "nom": "Ivysaur",
+                      "type_primaire": "Grass",
+                      "type_secondaire": "Poison",
+                      "pv": 60,
+                      "attaque": 62,
+                      "defense": 63
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Pokémon introuvable avec l'ID spécifié"
+            },
+            "400": {
+              "description": "Format JSON invalide ou champs manquants",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "erreur": "Le format des données est invalide",
+                    "champ_manquant": ["pv", "attaque"]
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erreur lors de la modification du Pokémon"
+            }
+          }
+        },
+        "delete": {
+          "description": "Supprime un Pokémon en fonction de son identifiant.",
+          "summary": "Supprimer un Pokémon",
+          "tags": ["Pokémon"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID du Pokémon"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succès, renvoie un message et les détails du Pokémon supprimé",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Le pokemon id 999 a été supprimé avec succès",
+                    "pokemon": {
+                      "id": 999,
+                      "nom": "Ivysaur",
+                      "type_primaire": "Grass",
+                      "type_secondaire": "Poison",
+                      "pv": 60,
+                      "attaque": 62,
+                      "defense": 63
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Pokémon introuvable avec l'ID spécifié"
+            },
+            "500": {
+              "description": "Erreur lors de la suppression du Pokémon"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Pokemon": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "nom": {
+              "type": "string"
+            },
+            "type_primaire": {
+              "type": "string"
+            },
+            "type_secondaire": {
+              "type": "string"
+            },
+            "pv": {
+              "type": "integer"
+            },
+            "attaque": {
+              "type": "integer"
+            },
+            "defense": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+  
