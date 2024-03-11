@@ -1,5 +1,7 @@
 // À ajuster selon la structure
-const sql = require("../config/db.js");
+//const sql = require("../config/db.js");
+const sql = require("../config/pg_db");
+
 
 class Pokemon {
     constructor() {

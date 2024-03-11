@@ -30,7 +30,8 @@ const authentification = require('./src/middlewares/authentification.middleware'
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 //si route recu est; vérification clé-api; execute le scrie qui suit
-app.use('/api/pokemons', authentification, require('./src/routes/pokemon.route.js'));
+app.use('/api/pokemons', require('./src/routes/pokemon.route.js'));
+//app.use('/api/pokemons', authentification, require('./src/routes/pokemon.route.js'));
 
 app.use('/api/users', require('./src/routes/utilisateur.route.js'))
 
