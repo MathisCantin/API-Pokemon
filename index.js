@@ -24,10 +24,15 @@ app.use(express.json()); //converti en json
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('clf', { stream: accessLogStream }));
 
+const authentification = require('./src/middlewares/authentification.middleware'); //protection des route (clé api)
+
 // Les routes
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
-app.use('/api/pokemons', require('./src/routes/pokemon.route.js'));// si route recu est ... execute le script qui suit
+//si route recu est; vérification clé-api; execute le scrie qui suit
+app.use('/api/pokemons', authentification, require('./src/routes/pokemon.route.js'));
+
+app.use('/api/users', require('./src/routes/utilisateur.route.js'))
 
 app.get('/api', (req, res) => {
     res.send('Message de bienvenue à l\'api de pokemon');

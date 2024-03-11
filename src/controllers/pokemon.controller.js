@@ -35,7 +35,6 @@ exports.trouverPokemon = (req, res) => {
 };
 
 exports.tousPokemon = (req, res) => {
-    // Extracting page and type parameters from the query string
     const page = parseInt(req.query.page) || 1;
     const type = req.query.type || '';
 
@@ -179,8 +178,7 @@ exports.supprimerPokemon = (req, res) => {
             res.status(200).send({
                 message: `Pokemon supprimé avec succès (id: ${pokemonId})`,
                 pokemon: {
-                    id: pokemonId,
-                    ...req.body // Assuming you have the details in the request body
+                    id: pokemonId
                 }
             });
         })
