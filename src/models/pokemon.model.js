@@ -1,7 +1,6 @@
 // À ajuster selon la structure
 //const sql = require("../config/db.js");
-const sql = require("../config/pg_db");
-
+const sql = require("../config/pg_db.js");
 
 class Pokemon {
     constructor() {
@@ -15,18 +14,22 @@ class Pokemon {
 
     static trouverPokemon = (id) => {
         return new Promise((resolve, reject) => {
+            console.log("esseye2");
 
             const requete = `SELECT * FROM pokemon WHERE id = $1`;
-            const params = [id]
+            const params = [id];
 
             sql.query(requete, params, (erreur, resultat) => {
                 if (erreur) {
+                    console.log("esseye3");
                     // S'il y a une erreur, je la retourne avec reject()
                     reject(erreur);
                 }
                 // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
+                console.log("esseye4");
                 resolve(resultat);
             });
+            console.log("esseye5");
         });
     };
 

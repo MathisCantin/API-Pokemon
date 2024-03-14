@@ -3,6 +3,7 @@ const Pokemon = require("../models/pokemon.model.js");
 
 exports.trouverPokemon = (req, res) => {
     // Teste si le paramètre id est présent et valide
+    console.log("esseye");
     const pokemonId = parseInt(req.params.id);
 
     if (!pokemonId || pokemonId <= 0) {
