@@ -14,7 +14,7 @@ class Pokemon {
 
     static trouverPokemon = (id) => {
         return new Promise((resolve, reject) => {
-            const requete = `SELECT * FROM pokemon WHERE id = $1`;
+            const requete = "SELECT * FROM pokemon WHERE id = $1";
             const params = [id];
 
             sql.query(requete, params, (erreur, resultat) => {
