@@ -18,7 +18,7 @@ class Pokemon {
             const params = [id];
 
             sql.query(requete, params, (erreur, resultat) => {
-                console.log(erreur);
+                //console.log(erreur);
                 if (erreur) {
                     // S'il y a une erreur, je la retourne avec reject()
                     reject(erreur);
