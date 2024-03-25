@@ -23,9 +23,10 @@ class Pokemon {
                     reject(erreur);
                 }
                 // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
+                console.log(resultat);
+                console.log(id);
                 resolve(resultat.rows);
             });
-            console.log("esseye5");
         });
     };
 
